@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BAI05 — Fase 2: Implementación y Gestión del Cambio</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <img src="images/Logo Cafsa NUEVO_N_tagline.png" alt="CAFSA Grupo Financiero" class="header-logo" />
+      <div class="header-divider"></div>
+      <div class="header-title">
+        <span class="doc-code">X-PRO-XXX &nbsp;·&nbsp; BAI05</span>
+        <span class="doc-name">Procedimiento para la Gestión del Cambio Organizativo</span>
+      </div>
+    </div>
+    <div class="fase-barra">
+      <span class="fase-barra-texto">Fase 2</span>
+      <span class="fase-barra-sub">— Implementación / Gestión del Cambio</span>
+      <div class="fase-paso">
+        <div class="paso-dot"></div>
+        <div class="paso-dot activo"></div>
+        <div class="paso-dot"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <div class="form-header">
+      <div class="form-badge">Fase 2 — Ejecución</div>
+      <div class="form-id">6-FOR-XXX — Formulario de Gestión del Cambio Organizativo</div>
+      <div class="form-cobit">BAI05.03 Comunicar la visión &nbsp;|&nbsp; BAI05.04 Facultar roles &nbsp;|&nbsp; BAI05.05 Habilitar operación</div>
+    </div>
+
+    <!-- IDENTIFICACIÓN -->
+    <div class="seccion">
+      <h2 class="seccion-titulo">Identificación</h2>
+      <div class="grid-2">
+        <div class="campo">
+          <label>Código del cambio</label>
+          <input type="text" id="f2_codigo" placeholder="GCO-AAAA-XXX" />
+        </div>
+        <div class="campo">
+          <label>Versión del plan</label>
+          <input type="text" id="f2_version" value="1.0" />
+        </div>
+        <div class="campo">
+          <label>Nombre del cambio</label>
+          <input type="text" id="f2_nombre" placeholder="Nombre" />
+        </div>
+        <div class="campo">
+          <label>Fecha de elaboración</label>
+          <input type="date" id="f2_fecha" />
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPONENTE A — COMUNICACIÓN -->
+    <div class="seccion">
+      <h2 class="seccion-titulo">Componente A — Plan de Comunicación <span class="cobit-tag">BAI05.03</span></h2>
+      <div class="tabla-wrapper">
+        <table class="tabla-dinamica">
+          <thead>
+            <tr>
+              <th>Audiencia</th>
+              <th>Mensaje clave</th>
+              <th>Canal</th>
+              <th>Frecuencia</th>
+              <th>Responsable</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tbody-comunicacion">
+            <tr>
+              <td><input type="text" value="Junta Directiva" /></td>
+              <td><input type="text" placeholder="Mensaje" /></td>
+              <td><input type="text" placeholder="Canal" /></td>
+              <td><input type="text" placeholder="Frec." /></td>
+              <td><input type="text" placeholder="Resp." /></td>
+              <td><button class="btn-eliminar" onclick="eliminarFila(this)">✕</button></td>
+            </tr>
+            <tr>
+              <td><input type="text" value="Mandos medios" /></td>
+              <td><input type="text" placeholder="Mensaje" /></td>
+              <td><input type="text" placeholder="Canal" /></td>
+              <td><input type="text" placeholder="Frec." /></td>
+              <td><input type="text" placeholder="Resp." /></td>
+              <td><button class="btn-eliminar" onclick="eliminarFila(this)">✕</button></td>
+            </tr>
+            <tr>
+              <td><input type="text" value="Personal operativo" /></td>
+              <td><input type="text" placeholder="Mensaje" /></td>
+              <td><input type="text" placeholder="Canal" /></td>
+              <td><input type="text" placeholder="Frec." /></td>
+              <td><input type="text" placeholder="Resp." /></td>
+              <td><button class="btn-eliminar" onclick="eliminarFila(this)">✕</button></td>
+            </tr>
+            <tr>
+              <td><input type="text" value="Clientes internos" /></td>
+              <td><input type="text" placeholder="Mensaje" /></td>
+              <td><input type="text" placeholder="Canal" /></td>
+              <td><input type="text" placeholder="Frec." /></td>
+              <td><input type="text" placeholder="Resp." /></td>
+              <td><button class="btn-eliminar" onclick="eliminarFila(this)">✕</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="btn-agregar" onclick="agregarFilaComunicacion()">+ Agregar audiencia</button>
+      </div>
+    </div>
+
+    <!-- COMPONENTE B — CAPACITACIÓN -->
+    <div class="seccion">
+      <h2 class="seccion-titulo">Componente B — Capacitación <span class="cobit-tag">BAI05.04</span></h2>
+      <div class="control-nota">
+        Una vez realizadas las capacitaciones, referenciar el registro correspondiente resguardado en Recursos Humanos (paso 6.2.4).
+      </div>
+      <div class="tabla-wrapper">
+        <table class="tabla-dinamica">
+          <thead>
+            <tr>
+              <th>Grupo a capacitar</th>
+              <th>Temas</th>
+              <th>Modalidad y duración</th>
+              <th>Fecha estimada</th>
+              <th>Ref. Recursos Humanos</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tbody-capacitacion">
+            <tr>
+              <td><input type="text" placeholder="Grupo" /></td>
+              <td><input type="text" placeholder="Temas" /></td>
+              <td><input type="text" placeholder="Modalidad" /></td>
+              <td><input type="date" /></td>
+              <td><input type="text" placeholder="Referencia registro RH" /></td>
+              <td><button class="btn-eliminar" onclick="eliminarFila(this)">✕</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="btn-agregar" onclick="agregarFilaCapacitacion()">+ Agregar grupo</button>
+      </div>
+    </div>
+
+    <!-- COMPONENTE B — RESISTENCIA -->
+    <div class="seccion">
+      <h2 class="seccion-titulo">Componente B — Gestión de Resistencia <span class="cobit-tag">BAI05.04</span></h2>
+      <div class="tabla-wrapper">
+        <table class="tabla-dinamica">
+          <thead>
+            <tr>
+              <th>Resistencia identificada</th>
+              <th>Acción tomada</th>
+              <th>Resultado obtenido</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tbody-resistencia">
+            <tr>
+              <td><input type="text" placeholder="Descripción" /></td>
+              <td><input type="text" placeholder="Acción" /></td>
+              <td><input type="text" placeholder="Resultado" /></td>
+              <td><button class="btn-eliminar" onclick="eliminarFila(this)">✕</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="btn-agregar" onclick="agregarFilaResistencia()">+ Agregar resistencia</button>
+      </div>
+    </div>
+
+    <!-- COMPONENTE C — MÉTRICAS -->
+    <div class="seccion">
+      <h2 class="seccion-titulo">Componente C — Métricas de Adopción <span class="cobit-tag">BAI05.05</span></h2>
+      <p class="seccion-nota">Umbrales según lineamiento 5.5. Pueden ajustarse con justificación documentada y revisión del OFGECA.</p>
+      <div class="tabla-wrapper">
+        <table class="tabla-metricas">
+          <thead>
+            <tr>
+              <th>Métrica</th>
+              <th>Meta mínima</th>
+              <th>Meta óptima</th>
+              <th>Resultado real</th>
+              <th>Fuente</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>% usuarios capacitados</td>
+              <td class="meta-min">80%</td>
+              <td class="meta-opt">95%</td>
+              <td><input type="text" id="m1_real" placeholder="X%" /></td>
+              <td>Recursos Humanos</td>
+            </tr>
+            <tr>
+              <td>% procesos con nuevo esquema</td>
+              <td class="meta-min">90%</td>
+              <td class="meta-opt">100%</td>
+              <td><input type="text" id="m2_real" placeholder="X%" /></td>
+              <td>Operaciones</td>
+            </tr>
+            <tr>
+              <td>Satisfacción de usuarios</td>
+              <td class="meta-min">70%</td>
+              <td class="meta-opt">85%</td>
+              <td><input type="text" id="m3_real" placeholder="X%" /></td>
+              <td>Encuesta</td>
+            </tr>
+            <tr>
+              <td><input type="text" id="m4_nombre" placeholder="Métrica específica del cambio" /></td>
+              <td><input type="text" id="m4_min" placeholder="Meta" /></td>
+              <td><input type="text" id="m4_opt" placeholder="Meta" /></td>
+              <td><input type="text" id="m4_real" placeholder="X%" /></td>
+              <td><input type="text" id="m4_fuente" placeholder="Fuente" /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- APROBACIÓN FASE 2 -->
+    <div class="seccion seccion-aprobacion">
+      <h2 class="seccion-titulo">Aprobación del Plan</h2>
+      <div class="control-nota">
+        La Fase 3 NO puede iniciar sin la aprobación del OFGECA (lineamiento 5.2).
+      </div>
+      <div class="tabla-wrapper">
+        <table class="tabla-aprobacion">
+          <thead>
+            <tr>
+              <th>Instancia</th>
+              <th>Nombre y cargo</th>
+              <th>Evidencia de aprobación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>OFGECA</strong> <span class="obligatorio">Obligatorio</span></td>
+              <td><input type="text" id="f2_firma_ofgeca_nombre" placeholder="Nombre y cargo" /></td>
+              <td><input type="file" id="f2_evidencia_ofgeca" accept=".pdf,.jpg,.png,.eml" /></td>
+            </tr>
+            <tr>
+              <td>Responsable del Cambio</td>
+              <td><input type="text" id="f2_firma_rc_nombre" placeholder="Nombre" /></td>
+              <td><input type="date" id="f2_firma_rc_fecha" /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- BOTONES -->
+    <div class="botones-fase">
+      <button class="btn-exportar" onclick="exportarFase2()">⬇ Exportar Fase 2 a Excel</button>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    Grupo Financiero CAFSA &nbsp;·&nbsp; Proceso BAI05 &nbsp;·&nbsp; COBIT 2019 / CONASSIF 5-24
+  </footer>
+
+  <script src="app.js"></script>
+  <script src="exportar.js"></script>
+</body>
+</html>

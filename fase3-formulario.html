@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BAI05 — Fase 3: Seguimiento y Cierre</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <img src="images/Logo Cafsa NUEVO_N_tagline.png" alt="CAFSA Grupo Financiero" class="header-logo" />
+      <div class="header-divider"></div>
+      <div class="header-title">
+        <span class="doc-code">X-PRO-XXX &nbsp;·&nbsp; BAI05</span>
+        <span class="doc-name">Procedimiento para la Gestión del Cambio Organizativo</span>
+      </div>
+    </div>
+    <div class="fase-barra">
+      <span class="fase-barra-texto">Fase 3</span>
+      <span class="fase-barra-sub">— Seguimiento y Cierre</span>
+      <div class="fase-paso">
+        <div class="paso-dot"></div>
+        <div class="paso-dot"></div>
+        <div class="paso-dot activo"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <div class="form-header">
+      <div class="form-badge">Fase 3 — Cierre y Sostenimiento</div>
+      <div class="form-id">6-FOR-XXX — Formulario de Gestión del Cambio Organizativo</div>
+      <div class="form-cobit">BAI05.06 Incorporar nuevos enfoques &nbsp;|&nbsp; BAI05.07 Sostener cambios</div>
+    </div>
+
+    <!-- IDENTIFICACIÓN -->
+    <div class="seccion">
+      <h2 class="seccion-titulo">Identificación del Cambio</h2>
+      <div class="grid-2">
+        <div class="campo">
+          <label>Código del cambio</label>
+          <input type="text" id="f3_codigo" placeholder="GCO-AAAA-XXX" />
+        </div>
+        <div class="campo">
+          <label>Fecha de cierre</label>
+          <input type="date" id="f3_fecha_cierre" />
+        </div>
+        <div class="campo">
+          <label>Nombre del cambio</label>
+          <input type="text" id="f3_nombre" placeholder="Nombre" />
+        </div>
+        <div class="campo">
+          <label>Responsable del Cambio</label>
+          <input type="text" id="f3_rc" placeholder="Nombre" />
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 1 — RESULTADOS -->
+    <div class="seccion">
+      <h2 class="seccion-titulo">Sección 1 — Resultados vs. Metas <span class="cobit-tag">BAI05.06</span></h2>
+      <div class="tabla-wrapper">
+        <table class="tabla-resultados">
+          <thead>
+            <tr>
+              <th>Métrica</th>
+              <th>Meta mínima</th>
+              <th>Meta óptima</th>
+              <th>Resultado final</th>
+              <th>Evaluación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>% usuarios capacitados</td>
+              <td class="meta-min">80%</td>
+              <td class="meta-opt">95%</td>
+              <td><input type="text" id="r1_resultado" placeholder="X%" /></td>
+              <td>
+                <select id="r1_eval">
+                  <option value="">Seleccionar</option>
+                  <option>Logrado</option>
+                  <option>Parcial</option>
+                  <option>No logrado</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>% procesos con nuevo esquema</td>
+              <td class="meta-min">90%</td>
+              <td class="meta-opt">100%</td>
+              <td><input type="text" id="r2_resultado" placeholder="X%" /></td>
+              <td>
+                <select id="r2_eval">
+                  <option value="">Seleccionar</option>
+                  <option>Logrado</option>
+                  <option>Parcial</option>
+                  <option>No logrado</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Satisfacción de usuarios</td>
+              <td class="meta-min">70%</td>
+              <td class="meta-opt">85%</td>
+              <td><input type="text" id="r3_resultado" placeholder="X%" /></td>
+              <td>
+                <select id="r3_eval">
+                  <option value="">Seleccionar</option>
+                  <option>Logrado</option>
+                  <option>Parcial</option>
+                  <option>No logrado</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Reducción de incidentes</td>
+              <td class="meta-min">50%</td>
+              <td class="meta-opt">70%</td>
+              <td><input type="text" id="r4_resultado" placeholder="X%" /></td>
+              <td>
+                <select id="r4_eval">
+                  <option value="">Seleccionar</option>
+                  <option>Logrado</option>
+                  <option>Parcial</option>
+                  <option>No logrado</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 2 — LECCIONES APRENDIDAS -->
+    <div class="seccion">
+      <h2 class="seccion-titulo">Sección 2 — Lecciones Aprendidas <span class="cobit-tag obligatorio-tag">BAI05.07 — Obligatoria</span></h2>
+      <div class="campo">
+        <label>¿Qué funcionó bien durante este cambio?</label>
+        <textarea id="f3_l1" rows="3" placeholder="Describir"></textarea>
+      </div>
+      <div class="campo">
+        <label>¿Qué no funcionó bien o representó dificultades?</label>
+        <textarea id="f3_l2" rows="3" placeholder="Describir"></textarea>
+      </div>
+      <div class="campo">
+        <label>¿Qué se haría diferente en futuros cambios?</label>
+        <textarea id="f3_l3" rows="3" placeholder="Describir"></textarea>
+      </div>
+      <div class="campo">
+        <label>¿Qué acciones preventivas se recomiendan?</label>
+        <textarea id="f3_l4" rows="3" placeholder="Describir"></textarea>
+      </div>
+      <div class="campo">
+        <label>¿Cómo se distribuirán estas lecciones?</label>
+        <textarea id="f3_l5" rows="3" placeholder="Describir canal: comunicado, sesión informativa o correo a líderes"></textarea>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 3 — APROBACIÓN CIERRE -->
+    <div class="seccion seccion-aprobacion">
+      <h2 class="seccion-titulo">Sección 3 — Aprobación de Cierre Formal</h2>
+      <div class="control-nota">
+        Sin evidencia de aprobación del OFGECA y la JD, el cambio permanece activo en el registro del OFGECA (lineamiento 5.2.3).
+      </div>
+      <div class="tabla-wrapper">
+        <table class="tabla-aprobacion">
+          <thead>
+            <tr>
+              <th>Instancia</th>
+              <th>Nombre y cargo</th>
+              <th>Evidencia de aprobación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>OFGECA</strong> <span class="obligatorio">Obligatorio</span></td>
+              <td><input type="text" id="f3_firma_ofgeca_nombre" placeholder="Nombre y cargo" /></td>
+              <td><input type="file" id="f3_evidencia_ofgeca" accept=".pdf,.jpg,.png,.eml" /></td>
+            </tr>
+            <tr>
+              <td><strong>Junta Directiva</strong> <span class="obligatorio">Obligatorio</span></td>
+              <td><input type="text" id="f3_firma_jd_nombre" placeholder="Nombre y cargo" /></td>
+              <td><input type="file" id="f3_evidencia_jd" accept=".pdf,.jpg,.png,.eml" /></td>
+            </tr>
+            <tr>
+              <td>Responsable del Cambio</td>
+              <td><input type="text" id="f3_firma_rc_nombre" placeholder="Nombre" /></td>
+              <td><input type="date" id="f3_firma_rc_fecha" /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- BOTONES -->
+    <div class="botones-fase">
+      <button class="btn-exportar btn-cierre" onclick="exportarFase3()">⬇ Exportar Fase 3 a Excel</button>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    Grupo Financiero CAFSA &nbsp;·&nbsp; Proceso BAI05 &nbsp;·&nbsp; COBIT 2019 / CONASSIF 5-24
+  </footer>
+
+  <script src="app.js"></script>
+  <script src="exportar.js"></script>
+</body>
+</html>
+

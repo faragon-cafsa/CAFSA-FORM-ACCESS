@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BAI05 — Fase 1: Identificación y Evaluación del Cambio</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <img src="images/Logo Cafsa NUEVO_N_tagline.png" alt="CAFSA Grupo Financiero" class="header-logo" />
+      <div class="header-divider"></div>
+      <div class="header-title">
+        <span class="doc-code">X-PRO-XXX &nbsp;·&nbsp; BAI05</span>
+        <span class="doc-name">Procedimiento para la Gestión del Cambio Organizativo</span>
+      </div>
+    </div>
+    <div class="fase-barra">
+      <span class="fase-barra-texto">Fase 1</span>
+      <span class="fase-barra-sub">— Identificación y Evaluación del Cambio</span>
+      <div class="fase-paso">
+        <div class="paso-dot activo"></div>
+        <div class="paso-dot"></div>
+        <div class="paso-dot"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <div class="form-header">
+      <div class="form-badge">Fase 1 — Inicio y Aprobación</div>
+      <div class="form-id">6-FOR-XXX — Formulario de Gestión del Cambio Organizativo</div>
+      <div class="form-cobit">BAI05.01 Establecer el deseo de cambiar &nbsp;|&nbsp; BAI05.02 Formar un equipo de implementación eficaz</div>
+    </div>
+
+    <!-- SECCIÓN 1 -->
+    <div class="seccion">
+      <h2 class="seccion-titulo">Sección 1 — Identificación del Cambio</h2>
+      <div class="grid-2">
+        <div class="campo">
+          <label>Código del cambio</label>
+          <input type="text" id="f1_codigo" placeholder="GCO-AAAA-XXX" />
+        </div>
+        <div class="campo">
+          <label>Fecha de solicitud</label>
+          <input type="date" id="f1_fecha_solicitud" />
+        </div>
+        <div class="campo">
+          <label>Nombre del cambio</label>
+          <input type="text" id="f1_nombre" placeholder="Nombre descriptivo" />
+        </div>
+        <div class="campo">
+          <label>Solicitante / Promotor</label>
+          <input type="text" id="f1_solicitante" placeholder="Nombre y cargo" />
+        </div>
+        <div class="campo">
+          <label>Área solicitante</label>
+          <input type="text" id="f1_area" placeholder="Área" />
+        </div>
+        <div class="campo">
+          <label>Responsable del Cambio (RC)</label>
+          <input type="text" id="f1_rc" placeholder="Nombre" />
+        </div>
+        <div class="campo">
+          <label>Fecha estimada de inicio</label>
+          <input type="date" id="f1_fecha_inicio" />
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 2 -->
+    <div class="seccion">
+      <h2 class="seccion-titulo">Sección 2 — Descripción y Justificación del Cambio</h2>
+      <div class="campo">
+        <label>Objetivo del cambio</label>
+        <textarea id="f1_objetivo" rows="3" placeholder="¿Qué se quiere lograr y por qué es necesario?"></textarea>
+      </div>
+      <div class="campo">
+        <label>Procesos críticos afectados</label>
+        <textarea id="f1_procesos" rows="2" placeholder="Listar los procesos impactados"></textarea>
+      </div>
+      <div class="campo">
+        <label>Criterios de activación (lineamiento 5.1)</label>
+        <div class="checkbox-group">
+          <label class="check-label"><input type="checkbox" name="criterio" value="1" /> 1: Afecta procesos críticos</label>
+          <label class="check-label"><input type="checkbox" name="criterio" value="2" /> 2: Involucra 2+ unidades</label>
+          <label class="check-label"><input type="checkbox" name="criterio" value="3" /> 3: Cambios en roles o estructura</label>
+          <label class="check-label"><input type="checkbox" name="criterio" value="4" /> 4: Transformación cultural</label>
+          <label class="check-label"><input type="checkbox" name="criterio" value="5" /> 5: Alta complejidad</label>
+        </div>
+      </div>
+      <div class="campo">
+        <label>Riesgos de no gestionar</label>
+        <textarea id="f1_riesgos" rows="2" placeholder="Describir consecuencias de no actuar"></textarea>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 3 -->
+    <div class="seccion">
+      <h2 class="seccion-titulo">Sección 3 — Evaluación de Disposición al Cambio</h2>
+      <div class="tabla-wrapper">
+        <table class="tabla-dinamica">
+          <thead>
+            <tr>
+              <th>Área afectada</th>
+              <th>Nivel de disposición</th>
+              <th>Riesgos de resistencia</th>
+              <th>Acciones previas recomendadas</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tbody-disposicion">
+            <tr>
+              <td><input type="text" placeholder="Área" /></td>
+              <td>
+                <select>
+                  <option value="">Seleccionar</option>
+                  <option>Alto</option>
+                  <option>Medio</option>
+                  <option>Bajo</option>
+                </select>
+              </td>
+              <td><input type="text" placeholder="Describir" /></td>
+              <td><input type="text" placeholder="Describir" /></td>
+              <td><button class="btn-eliminar" onclick="eliminarFila(this)">✕</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="btn-agregar" onclick="agregarFilaDisposicion()">+ Agregar área</button>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 4 -->
+    <div class="seccion">
+      <h2 class="seccion-titulo">Sección 4 — Equipo de Implementación</h2>
+      <div class="control-nota">
+        Debe incluir al menos un representante del negocio antes de iniciar la Fase 2 (lineamiento 5.3).
+      </div>
+      <div class="tabla-wrapper">
+        <table class="tabla-dinamica">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Área</th>
+              <th>Rol en el equipo</th>
+              <th>Disponibilidad (%)</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tbody-equipo">
+            <tr>
+              <td><input type="text" placeholder="Nombre" /></td>
+              <td><input type="text" placeholder="Área" /></td>
+              <td><input type="text" value="Responsable del Cambio" /></td>
+              <td><input type="number" placeholder="%" min="0" max="100" /></td>
+              <td><button class="btn-eliminar" onclick="eliminarFila(this)">✕</button></td>
+            </tr>
+            <tr>
+              <td><input type="text" placeholder="Nombre" /></td>
+              <td><input type="text" placeholder="Área de negocio" /></td>
+              <td><input type="text" value="Representante del Negocio" /></td>
+              <td><input type="number" placeholder="%" min="0" max="100" /></td>
+              <td><button class="btn-eliminar" onclick="eliminarFila(this)">✕</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="btn-agregar" onclick="agregarFilaEquipo()">+ Agregar miembro</button>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 5 — APROBACIÓN -->
+    <div class="seccion seccion-aprobacion">
+      <h2 class="seccion-titulo">Sección 5 — Aprobación de Inicio</h2>
+      <div class="control-nota">
+        La Fase 2 NO puede iniciar sin la aprobación del OFGECA (lineamiento 5.2).
+      </div>
+      <div class="tabla-wrapper">
+        <table class="tabla-aprobacion">
+          <thead>
+            <tr>
+              <th>Instancia</th>
+              <th>Nombre y cargo</th>
+              <th>Evidencia de aprobación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>OFGECA</strong> <span class="obligatorio">Obligatorio</span></td>
+              <td><input type="text" id="f1_firma_ofgeca_nombre" placeholder="Nombre y cargo" /></td>
+              <td><input type="file" id="f1_evidencia_ofgeca" accept=".pdf,.jpg,.png,.eml" /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- BOTONES -->
+    <div class="botones-fase">
+      <button class="btn-exportar" onclick="exportarFase1()">⬇ Exportar Fase 1 a Excel</button>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    Grupo Financiero CAFSA &nbsp;·&nbsp; Proceso BAI05 &nbsp;·&nbsp; COBIT 2019 / CONASSIF 5-24
+  </footer>
+
+  <script src="app.js"></script>
+  <script src="exportar.js"></script>
+</body>
+</html>
+
