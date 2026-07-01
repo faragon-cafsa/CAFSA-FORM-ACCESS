@@ -9,8 +9,6 @@
 </head>
 <body>
 
-  <!-- marco -->
-
   <header class="header">
     <div class="header-inner">
       <img src="images/Logo Cafsa NUEVO_N_tagline.png" alt="CAFSA Grupo Financiero" class="header-logo" />
@@ -34,7 +32,7 @@
   <main class="main-content">
 
     <div class="form-header">
-      <div class="form-badge">Fase 3 — Cierre y Sostenimiento</div>
+      <div class="form-badge">Fase 3 — Cierre</div>
       <div class="form-id">6-FOR-XXX — Formulario de Gestión del Cambio Organizativo</div>
       <div class="form-cobit">BAI05.06 Incorporar nuevos enfoques &nbsp;|&nbsp; BAI05.07 Sostener cambios</div>
     </div>
@@ -66,7 +64,7 @@
     <div class="seccion">
       <h2 class="seccion-titulo">Sección 1 — Resultados vs. Metas <span class="cobit-tag">BAI05.06</span></h2>
       <div class="tabla-wrapper">
-        <table class="tabla-resultados">
+        <table class="tabla-dinamica">
           <thead>
             <tr>
               <th>Métrica</th>
@@ -74,67 +72,28 @@
               <th>Meta óptima</th>
               <th>Resultado final</th>
               <th>Evaluación</th>
+              <th></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="tbody-resultados">
             <tr>
-              <td>% usuarios capacitados</td>
-              <td class="meta-min">80%</td>
-              <td class="meta-opt">95%</td>
-              <td><input type="text" id="r1_resultado" placeholder="X%" /></td>
+              <td><input type="text" placeholder="Métrica" /></td>
+              <td><input type="text" placeholder="Meta mín." /></td>
+              <td><input type="text" placeholder="Meta ópt." /></td>
+              <td><input type="text" placeholder="X%" /></td>
               <td>
-                <select id="r1_eval">
+                <select>
                   <option value="">Seleccionar</option>
                   <option>Logrado</option>
                   <option>Parcial</option>
                   <option>No logrado</option>
                 </select>
               </td>
-            </tr>
-            <tr>
-              <td>% procesos con nuevo esquema</td>
-              <td class="meta-min">90%</td>
-              <td class="meta-opt">100%</td>
-              <td><input type="text" id="r2_resultado" placeholder="X%" /></td>
-              <td>
-                <select id="r2_eval">
-                  <option value="">Seleccionar</option>
-                  <option>Logrado</option>
-                  <option>Parcial</option>
-                  <option>No logrado</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>Satisfacción de usuarios</td>
-              <td class="meta-min">70%</td>
-              <td class="meta-opt">85%</td>
-              <td><input type="text" id="r3_resultado" placeholder="X%" /></td>
-              <td>
-                <select id="r3_eval">
-                  <option value="">Seleccionar</option>
-                  <option>Logrado</option>
-                  <option>Parcial</option>
-                  <option>No logrado</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>Reducción de incidentes</td>
-              <td class="meta-min">50%</td>
-              <td class="meta-opt">70%</td>
-              <td><input type="text" id="r4_resultado" placeholder="X%" /></td>
-              <td>
-                <select id="r4_eval">
-                  <option value="">Seleccionar</option>
-                  <option>Logrado</option>
-                  <option>Parcial</option>
-                  <option>No logrado</option>
-                </select>
-              </td>
+              <td><button class="btn-eliminar" onclick="eliminarFila(this)">✕</button></td>
             </tr>
           </tbody>
         </table>
+        <button class="btn-agregar" onclick="agregarFilaResultados()">+ Agregar métrica</button>
       </div>
     </div>
 
@@ -190,6 +149,11 @@
               <td><input type="file" id="f3_evidencia_jd" accept=".pdf,.jpg,.png,.eml" /></td>
             </tr>
             <tr>
+              <td><strong>Gerente General</strong> <span class="opcional">Opcional — solo cuando aplique</span></td>
+              <td><input type="text" id="f3_firma_gergen_nombre" placeholder="Nombre y cargo" /></td>
+              <td><input type="file" id="f3_evidencia_gergen" accept=".pdf,.jpg,.png,.eml" /></td>
+            </tr>
+            <tr>
               <td>Responsable del Cambio</td>
               <td><input type="text" id="f3_firma_rc_nombre" placeholder="Nombre" /></td>
               <td><input type="date" id="f3_firma_rc_fecha" /></td>
@@ -212,6 +176,28 @@
 
   <script src="app.js"></script>
   <script src="exportar.js"></script>
+  <script>
+    // Agrega filas dinámicas a la tabla de métricas (Sección 1 — Resultados vs. Metas)
+    function agregarFilaResultados() {
+      var tbody = document.getElementById('tbody-resultados');
+      if (!tbody) return;
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td><input type="text" placeholder="Métrica" /></td>' +
+        '<td><input type="text" placeholder="Meta mín." /></td>' +
+        '<td><input type="text" placeholder="Meta ópt." /></td>' +
+        '<td><input type="text" placeholder="X%" /></td>' +
+        '<td><select>' +
+          '<option value="">Seleccionar</option>' +
+          '<option>Logrado</option>' +
+          '<option>Parcial</option>' +
+          '<option>No logrado</option>' +
+        '</select></td>' +
+        '<td><button class="btn-eliminar" onclick="eliminarFila(this)">✕</button></td>';
+      tbody.appendChild(tr);
+    }
+  </script>
 </body>
 </html>
+
 
