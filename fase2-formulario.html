@@ -178,9 +178,9 @@
     <!-- COMPONENTE C — MÉTRICAS -->
     <div class="seccion">
       <h2 class="seccion-titulo">Componente C — Métricas de Adopción <span class="cobit-tag">BAI05.05</span></h2>
-      <p class="seccion-nota">Umbrales según lineamiento 5.5. Pueden ajustarse con justificación documentada y revisión del OFGECA.</p>
+      <p class="seccion-nota">Las métricas de adopción y sus metas las define el equipo para cada cambio (lineamiento 5.5), sujetas a revisión y aprobación del OFGECA.</p>
       <div class="tabla-wrapper">
-        <table class="tabla-metricas">
+        <table class="tabla-dinamica">
           <thead>
             <tr>
               <th>Métrica</th>
@@ -188,39 +188,21 @@
               <th>Meta óptima</th>
               <th>Resultado real</th>
               <th>Fuente</th>
+              <th></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="tbody-metricas">
             <tr>
-              <td>% usuarios capacitados</td>
-              <td class="meta-min">80%</td>
-              <td class="meta-opt">95%</td>
-              <td><input type="text" id="m1_real" placeholder="X%" /></td>
-              <td>Recursos Humanos</td>
-            </tr>
-            <tr>
-              <td>% procesos con nuevo esquema</td>
-              <td class="meta-min">90%</td>
-              <td class="meta-opt">100%</td>
-              <td><input type="text" id="m2_real" placeholder="X%" /></td>
-              <td>Operaciones</td>
-            </tr>
-            <tr>
-              <td>Satisfacción de usuarios</td>
-              <td class="meta-min">70%</td>
-              <td class="meta-opt">85%</td>
-              <td><input type="text" id="m3_real" placeholder="X%" /></td>
-              <td>Encuesta</td>
-            </tr>
-            <tr>
-              <td><input type="text" id="m4_nombre" placeholder="Métrica específica del cambio" /></td>
-              <td><input type="text" id="m4_min" placeholder="Meta" /></td>
-              <td><input type="text" id="m4_opt" placeholder="Meta" /></td>
-              <td><input type="text" id="m4_real" placeholder="X%" /></td>
-              <td><input type="text" id="m4_fuente" placeholder="Fuente" /></td>
+              <td><input type="text" placeholder="Métrica" /></td>
+              <td><input type="text" placeholder="Meta mín." /></td>
+              <td><input type="text" placeholder="Meta ópt." /></td>
+              <td><input type="text" placeholder="X%" /></td>
+              <td><input type="text" placeholder="Fuente" /></td>
+              <td><button class="btn-eliminar" onclick="eliminarFila(this)">✕</button></td>
             </tr>
           </tbody>
         </table>
+        <button class="btn-agregar" onclick="agregarFilaMetricas()">+ Agregar métrica</button>
       </div>
     </div>
 
@@ -268,5 +250,21 @@
 
   <script src="app.js"></script>
   <script src="exportar.js"></script>
+  <script>
+    // Agrega filas dinámicas a la tabla de métricas (Componente C — Métricas de Adopción)
+    function agregarFilaMetricas() {
+      var tbody = document.getElementById('tbody-metricas');
+      if (!tbody) return;
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td><input type="text" placeholder="Métrica" /></td>' +
+        '<td><input type="text" placeholder="Meta mín." /></td>' +
+        '<td><input type="text" placeholder="Meta ópt." /></td>' +
+        '<td><input type="text" placeholder="X%" /></td>' +
+        '<td><input type="text" placeholder="Fuente" /></td>' +
+        '<td><button class="btn-eliminar" onclick="eliminarFila(this)">✕</button></td>';
+      tbody.appendChild(tr);
+    }
+  </script>
 </body>
 </html>
