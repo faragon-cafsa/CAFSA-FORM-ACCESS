@@ -164,6 +164,48 @@ function descargar(wb, nombre) {
   });
 }
 
+// Lee el archivo (imagen) adjunto en un input file y agrega una pestaña "Sello de aprobación".
+// Devuelve una promesa que se resuelve cuando terminó (haya o no imagen).
+function agregarPestanaSello(wb, inputId) {
+  return new Promise(function (resolve) {
+    var input = document.getElementById(inputId);
+    if (!input || !input.files || input.files.length === 0) {
+      resolve(false); // no hay archivo adjunto
+      return;
+    }
+    var file = input.files[0];
+    var tipo = (file.type || '').toLowerCase();
+    // Solo imágenes (el sello es PNG/JPG)
+    var esPng = tipo.indexOf('png') !== -1;
+    var esJpg = tipo.indexOf('jpeg') !== -1 || tipo.indexOf('jpg') !== -1;
+    if (!esPng && !esJpg) {
+      resolve(false); // no es imagen, no se puede incrustar
+      return;
+    }
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      try {
+        var base64 = e.target.result; // data URL
+        var imageId = wb.addImage({ base64: base64, extension: esPng ? 'png' : 'jpeg' });
+        var hoja = wb.addWorksheet('Sello de aprobación');
+        hoja.getCell('A1').value = 'Sello de aprobación adjunto';
+        hoja.getCell('A1').font = { name: FUENTE, size: 12, bold: true, color: { argb: NEGRO } };
+        hoja.getColumn(1).width = 12;
+        // Insertar la imagen a partir de la fila 3
+        hoja.addImage(imageId, {
+          tl: { col: 0, row: 2 },
+          ext: { width: 700, height: 480 }
+        });
+        resolve(true);
+      } catch (err) {
+        resolve(false);
+      }
+    };
+    reader.onerror = function () { resolve(false); };
+    reader.readAsDataURL(file);
+  });
+}
+
 // ================= FASE 1 =================
 function exportarFase1() {
   var wb = new ExcelJS.Workbook();
@@ -206,7 +248,9 @@ function exportarFase1() {
 
   var fecha = new Date().toISOString().slice(0, 10);
   var codigo = val('f1_codigo') || 'sin-codigo';
-  descargar(wb, 'F-BAI05-01_' + codigo + '_' + fecha + '.xlsx');
+  agregarPestanaSello(wb, 'f1_evidencia_ofgeca').then(function () {
+    descargar(wb, 'F-BAI05-01_' + codigo + '_' + fecha + '.xlsx');
+  });
 }
 
 // ================= FASE 2 =================
@@ -252,7 +296,9 @@ function exportarFase2() {
 
   var fecha = new Date().toISOString().slice(0, 10);
   var codigo = val('f2_codigo') || 'sin-codigo';
-  descargar(wb, 'F-BAI05-02_' + codigo + '_' + fecha + '.xlsx');
+  agregarPestanaSello(wb, 'f2_evidencia_ofgeca').then(function () {
+    descargar(wb, 'F-BAI05-02_' + codigo + '_' + fecha + '.xlsx');
+  });
 }
 
 // ================= FASE 3 =================
@@ -293,5 +339,7 @@ function exportarFase3() {
 
   var fecha = new Date().toISOString().slice(0, 10);
   var codigo = val('f3_codigo') || 'sin-codigo';
-  descargar(wb, 'F-BAI05-03_' + codigo + '_' + fecha + '.xlsx');
+  agregarPestanaSello(wb, 'f3_evidencia_cierre').then(function () {
+    descargar(wb, 'F-BAI05-03_' + codigo + '_' + fecha + '.xlsx');
+  });
 }
