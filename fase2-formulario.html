@@ -206,41 +206,61 @@
       </div>
     </div>
 
-    <!-- APROBACIÓN FASE 2 -->
+    <!-- SECCIÓN — DECISIÓN DE APROBACIÓN -->
     <div class="seccion seccion-aprobacion">
-      <h2 class="seccion-titulo">Aprobación del Plan</h2>
+      <h2 class="seccion-titulo">Decisión de Aprobación del Plan</h2>
       <div class="control-nota">
         La Fase 3 NO puede iniciar sin el sello de aprobación del OFGECA (lineamiento 5.2).
       </div>
-      <div class="tabla-wrapper">
-        <table class="tabla-aprobacion">
-          <thead>
-            <tr>
-              <th>Instancia</th>
-              <th>Nombre y cargo</th>
-              <th>Sello de aprobación</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>OFGECA</strong> <span class="obligatorio">Obligatorio</span></td>
-              <td><input type="text" id="f2_firma_ofgeca_nombre" placeholder="Nombre y cargo" /></td>
-              <td><input type="file" id="f2_evidencia_ofgeca" accept=".pdf,.jpg,.png,.eml" /></td>
-            </tr>
-            <tr>
-              <td>Responsable del Cambio</td>
-              <td><input type="text" id="f2_firma_rc_nombre" placeholder="Nombre" /></td>
-              <td><input type="date" id="f2_firma_rc_fecha" /></td>
-            </tr>
-          </tbody>
-        </table>
-        <p class="seccion-nota">Adjunte el sello de aprobación enviado por el OFGECA por correo.</p>
+
+      <div class="campo">
+        <label>¿Se aprueba el avance a la Fase 3?</label>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="f2_decision" value="si" onchange="decisionFase2()" /> Sí, se aprueba</label>
+          <label class="radio-label"><input type="radio" name="f2_decision" value="no" onchange="decisionFase2()" /> No, se rechaza</label>
+        </div>
+      </div>
+
+      <!-- BLOQUE SI: aprobación -->
+      <div id="f2_bloque_aprobado" style="display:none; margin-top:16px;">
+        <div class="tabla-wrapper">
+          <table class="tabla-aprobacion">
+            <thead>
+              <tr>
+                <th>Instancia</th>
+                <th>Nombre y cargo</th>
+                <th>Sello de aprobación</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>OFGECA</strong> <span class="obligatorio">Obligatorio</span></td>
+                <td><input type="text" id="f2_firma_ofgeca_nombre" placeholder="Nombre y cargo" /></td>
+                <td><input type="file" id="f2_evidencia_ofgeca" accept=".png,.jpg,.jpeg" /></td>
+              </tr>
+              <tr>
+                <td>Responsable del Cambio</td>
+                <td><input type="text" id="f2_firma_rc_nombre" placeholder="Nombre" /></td>
+                <td><input type="date" id="f2_firma_rc_fecha" /></td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="seccion-nota">Adjunte el sello de aprobación enviado por el OFGECA por correo.</p>
+        </div>
+      </div>
+
+      <!-- BLOQUE NO: rechazo -->
+      <div id="f2_bloque_rechazado" style="display:none; margin-top:16px;">
+        <div class="campo">
+          <label>Justificación del rechazo</label>
+          <textarea id="f2_justificacion_rechazo" rows="3" placeholder="Indique por qué no se aprueba el plan y se cancela el proceso."></textarea>
+        </div>
       </div>
     </div>
 
     <!-- BOTONES -->
     <div class="botones-fase">
-      <button class="btn-exportar" onclick="exportarFase2()">⬇ Exportar Fase 2 a Excel</button>
+      <button class="btn-exportar" id="f2_btn_exportar" onclick="exportarFase2()" disabled>Seleccione una decisión</button>
     </div>
 
   </main>
@@ -265,6 +285,26 @@
         '<td><input type="text" placeholder="Fuente" /></td>' +
         '<td><button class="btn-eliminar" onclick="eliminarFila(this)">✕</button></td>';
       tbody.appendChild(tr);
+    }
+
+    // Muestra/oculta los bloques según la decisión de aprobación (Sí / No)
+    function decisionFase2() {
+      var dec = document.querySelector('input[name="f2_decision"]:checked');
+      var bloqueSi = document.getElementById('f2_bloque_aprobado');
+      var bloqueNo = document.getElementById('f2_bloque_rechazado');
+      var btn = document.getElementById('f2_btn_exportar');
+      if (!dec) { return; }
+      if (dec.value === 'si') {
+        bloqueSi.style.display = 'block';
+        bloqueNo.style.display = 'none';
+        btn.disabled = false;
+        btn.textContent = 'SIGUIENTE FASE (EXPORTAR)';
+      } else {
+        bloqueSi.style.display = 'none';
+        bloqueNo.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'FINALIZAR (EXPORTAR)';
+      }
     }
   </script>
 </body>
