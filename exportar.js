@@ -214,11 +214,26 @@ function exportarFase1() {
   var disposicion = filasDinamicas('tbody-disposicion', 4);
   var equipo = filasDinamicas('tbody-equipo', 4);
 
-  construirHoja(ws,
-    'F-BAI05-01 — Formulario de Gestión del Cambio Organizativo (Fase 1)',
-    'Inicio y Aprobación — BAI05 Gestión del Cambio Organizativo',
-    'BAI05.01 Establecer el deseo de cambiar  |  BAI05.02 Formar un equipo de implementación eficaz',
-    [
+  // Decisión de aprobación
+  var decEl = document.querySelector('input[name="f1_decision"]:checked');
+  var decision = decEl ? decEl.value : '';
+  var bloqueAprob;
+  if (decision === 'no') {
+    bloqueAprob = [
+      { tipo: 'seccion', texto: 'Sección 5 — Decisión de Aprobación' },
+      { tipo: 'campo', label: 'Resultado', value: 'RECHAZADO — No se aprueba el avance a la Fase 2' },
+      { tipo: 'campo', label: 'Justificación del rechazo', value: val('f1_justificacion_rechazo') }
+    ];
+  } else {
+    bloqueAprob = [
+      { tipo: 'seccion', texto: 'Sección 5 — Decisión de Aprobación' },
+      { tipo: 'campo', label: 'Resultado', value: 'APROBADO — Se autoriza el avance a la Fase 2' },
+      { tipo: 'campo', label: 'OFGECA (Obligatorio) — Nombre y cargo', value: val('f1_firma_ofgeca_nombre') },
+      { tipo: 'campo', label: 'Sello de aprobación', value: 'Adjunto en la pestaña "Sello de aprobación"' }
+    ];
+  }
+
+  var bloques = [
       { tipo: 'seccion', texto: 'Sección 1 — Identificación del Cambio' },
       { tipo: 'campo', label: 'Código del cambio', value: val('f1_codigo') },
       { tipo: 'campo', label: 'Fecha de solicitud', value: val('f1_fecha_solicitud') },
@@ -238,18 +253,22 @@ function exportarFase1() {
       { tipo: 'tabla', headers: ['Área afectada', 'Nivel de disposición', 'Riesgos de resistencia', 'Acciones previas recomendadas'], rows: disposicion },
 
       { tipo: 'seccion', texto: 'Sección 4 — Equipo de Implementación' },
-      { tipo: 'tabla', headers: ['Nombre', 'Área', 'Rol en el equipo', 'Disponibilidad (%)'], rows: equipo },
+      { tipo: 'tabla', headers: ['Nombre', 'Área', 'Rol en el equipo', 'Disponibilidad (%)'], rows: equipo }
+  ].concat(bloqueAprob);
 
-      { tipo: 'seccion', texto: 'Sección 5 — Aprobación de Inicio' },
-      { tipo: 'campo', label: 'OFGECA (Obligatorio) — Nombre y cargo', value: val('f1_firma_ofgeca_nombre') },
-      { tipo: 'campo', label: 'Evidencia de aprobación', value: 'Documento adjunto en el expediente' }
-    ]
+  construirHoja(ws,
+    'F-BAI05-01 — Formulario de Gestión del Cambio Organizativo (Fase 1)',
+    'Inicio y Aprobación — BAI05 Gestión del Cambio Organizativo',
+    'BAI05.01 Establecer el deseo de cambiar  |  BAI05.02 Formar un equipo de implementación eficaz',
+    bloques
   );
 
   var fecha = new Date().toISOString().slice(0, 10);
   var codigo = val('f1_codigo') || 'sin-codigo';
-  agregarPestanaSello(wb, 'f1_evidencia_ofgeca').then(function () {
-    descargar(wb, 'F-BAI05-01_' + codigo + '_' + fecha + '.xlsx');
+  var sufijo = (decision === 'no') ? '_RECHAZADO' : '';
+  var promSello = (decision === 'no') ? Promise.resolve(false) : agregarPestanaSello(wb, 'f1_evidencia_ofgeca');
+  promSello.then(function () {
+    descargar(wb, 'F-BAI05-01_' + codigo + '_' + fecha + sufijo + '.xlsx');
   });
 }
 
@@ -263,11 +282,28 @@ function exportarFase2() {
   var resistencia  = filasDinamicas('tbody-resistencia', 3);
   var metricas     = filasDinamicas('tbody-metricas', 5);
 
-  construirHoja(ws,
-    'F-BAI05-02 — Formulario de Gestión del Cambio Organizativo (Fase 2)',
-    'Ejecución — BAI05 Gestión del Cambio Organizativo',
-    'BAI05.03 Comunicar la visión  |  BAI05.04 Facultar roles  |  BAI05.05 Habilitar operación',
-    [
+  // Decisión de aprobación
+  var decEl = document.querySelector('input[name="f2_decision"]:checked');
+  var decision = decEl ? decEl.value : '';
+  var bloqueAprob;
+  if (decision === 'no') {
+    bloqueAprob = [
+      { tipo: 'seccion', texto: 'Decisión de Aprobación del Plan' },
+      { tipo: 'campo', label: 'Resultado', value: 'RECHAZADO — No se aprueba el avance a la Fase 3' },
+      { tipo: 'campo', label: 'Justificación del rechazo', value: val('f2_justificacion_rechazo') }
+    ];
+  } else {
+    bloqueAprob = [
+      { tipo: 'seccion', texto: 'Decisión de Aprobación del Plan' },
+      { tipo: 'campo', label: 'Resultado', value: 'APROBADO — Se autoriza el avance a la Fase 3' },
+      { tipo: 'campo', label: 'OFGECA (Obligatorio) — Nombre y cargo', value: val('f2_firma_ofgeca_nombre') },
+      { tipo: 'campo', label: 'Sello de aprobación', value: 'Adjunto en la pestaña "Sello de aprobación"' },
+      { tipo: 'campo', label: 'Responsable del Cambio — Nombre', value: val('f2_firma_rc_nombre') },
+      { tipo: 'campo', label: 'Responsable del Cambio — Fecha', value: val('f2_firma_rc_fecha') }
+    ];
+  }
+
+  var bloques = [
       { tipo: 'seccion', texto: 'Identificación' },
       { tipo: 'campo', label: 'Código del cambio', value: val('f2_codigo') },
       { tipo: 'campo', label: 'Versión del plan', value: val('f2_version') },
@@ -284,20 +320,22 @@ function exportarFase2() {
       { tipo: 'tabla', headers: ['Resistencia identificada', 'Acción tomada', 'Resultado obtenido'], rows: resistencia },
 
       { tipo: 'seccion', texto: 'Componente C — Métricas de Adopción (BAI05.05)' },
-      { tipo: 'tabla', headers: ['Métrica', 'Meta mínima', 'Meta óptima', 'Resultado real', 'Fuente'], rows: metricas },
+      { tipo: 'tabla', headers: ['Métrica', 'Meta mínima', 'Meta óptima', 'Resultado real', 'Fuente'], rows: metricas }
+  ].concat(bloqueAprob);
 
-      { tipo: 'seccion', texto: 'Aprobación del Plan' },
-      { tipo: 'campo', label: 'OFGECA (Obligatorio) — Nombre y cargo', value: val('f2_firma_ofgeca_nombre') },
-      { tipo: 'campo', label: 'Evidencia de aprobación', value: 'Documento adjunto en el expediente' },
-      { tipo: 'campo', label: 'Responsable del Cambio — Nombre', value: val('f2_firma_rc_nombre') },
-      { tipo: 'campo', label: 'Responsable del Cambio — Fecha', value: val('f2_firma_rc_fecha') }
-    ]
+  construirHoja(ws,
+    'F-BAI05-02 — Formulario de Gestión del Cambio Organizativo (Fase 2)',
+    'Ejecución — BAI05 Gestión del Cambio Organizativo',
+    'BAI05.03 Comunicar la visión  |  BAI05.04 Facultar roles  |  BAI05.05 Habilitar operación',
+    bloques
   );
 
   var fecha = new Date().toISOString().slice(0, 10);
   var codigo = val('f2_codigo') || 'sin-codigo';
-  agregarPestanaSello(wb, 'f2_evidencia_ofgeca').then(function () {
-    descargar(wb, 'F-BAI05-02_' + codigo + '_' + fecha + '.xlsx');
+  var sufijo = (decision === 'no') ? '_RECHAZADO' : '';
+  var promSello = (decision === 'no') ? Promise.resolve(false) : agregarPestanaSello(wb, 'f2_evidencia_ofgeca');
+  promSello.then(function () {
+    descargar(wb, 'F-BAI05-02_' + codigo + '_' + fecha + sufijo + '.xlsx');
   });
 }
 
