@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BAI05 — Fase 2: Ejecución</title>
+  <title>BAI05 — Fase 2: Implementación y Gestión del Cambio</title>
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
@@ -120,7 +120,7 @@
     <div class="seccion">
       <h2 class="seccion-titulo">Componente B — Capacitación <span class="cobit-tag">BAI05.04</span></h2>
       <div class="control-nota">
-        Una vez realizadas las capacitaciones, referenciar el registro correspondiente resguardado en GRUPO CAFSA (paso 6.3.4).
+        Una vez realizadas las capacitaciones, referenciar el registro correspondiente resguardado en Recursos Humanos (paso 6.2.4).
       </div>
       <div class="tabla-wrapper">
         <table class="tabla-dinamica">
@@ -130,7 +130,7 @@
               <th>Temas</th>
               <th>Modalidad y duración</th>
               <th>Fecha estimada</th>
-              <th>Ref. GRUPO CAFSA</th>
+              <th>Ref. Recursos Humanos</th>
               <th></th>
             </tr>
           </thead>
@@ -146,6 +146,33 @@
           </tbody>
         </table>
         <button class="btn-agregar" onclick="agregarFilaCapacitacion()">+ Agregar grupo</button>
+      </div>
+    </div>
+
+    <!-- COMPONENTE B — GANANCIAS RÁPIDAS -->
+    <div class="seccion">
+      <h2 class="seccion-titulo">Componente B — Ganancias Rápidas <span class="cobit-tag">BAI05.04</span></h2>
+      <p class="seccion-nota">Registre las ganancias rápidas identificadas y cómo se comunicaron a las partes interesadas (paso 6.3.6).</p>
+      <div class="tabla-wrapper">
+        <table class="tabla-dinamica">
+          <thead>
+            <tr>
+              <th>Ganancia rápida identificada</th>
+              <th>Cómo se comunicó</th>
+              <th>Fecha</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tbody-ganancias">
+            <tr>
+              <td><input type="text" placeholder="Descripción del logro temprano" /></td>
+              <td><input type="text" placeholder="Canal / medio" /></td>
+              <td><input type="date" /></td>
+              <td><button class="btn-eliminar" onclick="eliminarFila(this)">✕</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="btn-agregar" onclick="agregarFilaGanancias()">+ Agregar ganancia rápida</button>
       </div>
     </div>
 
@@ -272,6 +299,19 @@
   <script src="app.js"></script>
   <script src="exportar.js"></script>
   <script>
+    // Agrega filas dinámicas a la tabla de ganancias rápidas (Componente B — Ganancias Rápidas)
+    function agregarFilaGanancias() {
+      var tbody = document.getElementById('tbody-ganancias');
+      if (!tbody) return;
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td><input type="text" placeholder="Descripción del logro temprano" /></td>' +
+        '<td><input type="text" placeholder="Canal / medio" /></td>' +
+        '<td><input type="date" /></td>' +
+        '<td><button class="btn-eliminar" onclick="eliminarFila(this)">✕</button></td>';
+      tbody.appendChild(tr);
+    }
+
     // Agrega filas dinámicas a la tabla de métricas (Componente C — Métricas de Adopción)
     function agregarFilaMetricas() {
       var tbody = document.getElementById('tbody-metricas');
