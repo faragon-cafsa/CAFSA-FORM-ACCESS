@@ -279,6 +279,7 @@ function exportarFase2() {
 
   var comunicacion = filasDinamicas('tbody-comunicacion', 5);
   var capacitacion = filasDinamicas('tbody-capacitacion', 5);
+  var ganancias    = filasDinamicas('tbody-ganancias', 3);
   var resistencia  = filasDinamicas('tbody-resistencia', 3);
   var metricas     = filasDinamicas('tbody-metricas', 5);
 
@@ -315,6 +316,9 @@ function exportarFase2() {
 
       { tipo: 'seccion', texto: 'Componente B — Capacitación (BAI05.04)' },
       { tipo: 'tabla', headers: ['Grupo a capacitar', 'Temas', 'Modalidad y duración', 'Fecha estimada', 'Ref. Recursos Humanos'], rows: capacitacion },
+
+      { tipo: 'seccion', texto: 'Componente B — Ganancias Rápidas (BAI05.04)' },
+      { tipo: 'tabla', headers: ['Ganancia rápida identificada', 'Cómo se comunicó', 'Fecha'], rows: ganancias },
 
       { tipo: 'seccion', texto: 'Componente B — Gestión de Resistencia (BAI05.04)' },
       { tipo: 'tabla', headers: ['Resistencia identificada', 'Acción tomada', 'Resultado obtenido'], rows: resistencia },
