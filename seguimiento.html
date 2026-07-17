@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BAI05 — Seguimiento de Sostenimiento</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <img src="images/Logo Cafsa NUEVO_N_tagline.png" alt="CAFSA Grupo Financiero" class="header-logo" />
+      <div class="header-divider"></div>
+      <div class="header-title">
+        <span class="doc-code">X-PRO-XXX &nbsp;·&nbsp; BAI05</span>
+        <span class="doc-name">Procedimiento para la Gestión del Cambio Organizativo</span>
+      </div>
+    </div>
+    <div class="fase-barra">
+      <span class="fase-barra-texto">Seguimiento</span>
+      <span class="fase-barra-sub">— Sostenimiento del Cambio (Fase 3)</span>
+      <div class="fase-paso">
+        <div class="paso-dot"></div>
+        <div class="paso-dot"></div>
+        <div class="paso-dot activo"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <div class="form-header">
+      <div class="form-badge">Seguimiento de Sostenimiento — Fase 3</div>
+      <div class="form-id">Formulario de Seguimiento de Sostenimiento — BAI05 Gestión del Cambio Organizativo</div>
+      <div class="form-cobit">BAI05.06 Incorporar nuevos enfoques &nbsp;|&nbsp; BAI05.07 Sostener cambios</div>
+    </div>
+
+    <!-- NOTA INTRODUCTORIA -->
+    <div class="seccion">
+      <div class="control-nota">
+        A los seis meses posteriores al cierre del cambio, el Responsable del Cambio (RC) y el Oficial de Gestión de Calidad (OFGECA) realizan una revisión conjunta de sostenimiento para verificar que el cambio se ha mantenido en la operación (paso 6.4.7).
+      </div>
+    </div>
+
+    <!-- SECCIÓN 1 — DATOS DEL CAMBIO -->
+    <div class="seccion">
+      <h2 class="seccion-titulo">Sección 1 — Datos del Cambio</h2>
+      <div class="grid-2">
+        <div class="campo">
+          <label>Código del cambio</label>
+          <input type="text" id="fs_codigo" placeholder="GCO-AAAA-XXX" />
+        </div>
+        <div class="campo">
+          <label>Nombre del cambio</label>
+          <input type="text" id="fs_nombre" placeholder="Nombre" />
+        </div>
+        <div class="campo">
+          <label>Responsable del Cambio (RC)</label>
+          <input type="text" id="fs_rc" placeholder="Nombre" />
+        </div>
+        <div class="campo">
+          <label>Fecha de la revisión de sostenimiento</label>
+          <input type="date" id="fs_fecha_revision" />
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 2 — CRITERIOS DE SOSTENIMIENTO -->
+    <div class="seccion">
+      <h2 class="seccion-titulo">Sección 2 — Criterios de Sostenimiento</h2>
+      <p class="seccion-nota">Marque cada criterio que se cumple:</p>
+      <div class="campo">
+        <div class="checkbox-group">
+          <label class="check-label"><input type="checkbox" name="fs_criterio" value="1" /> El cambio se sigue utilizando en la operación diaria.</label>
+          <label class="check-label"><input type="checkbox" name="fs_criterio" value="2" /> El cambio se mantiene sin haber regresado a la forma de trabajo anterior.</label>
+          <label class="check-label"><input type="checkbox" name="fs_criterio" value="3" /> Las métricas del cambio se mantienen dentro de las metas definidas.</label>
+          <label class="check-label"><input type="checkbox" name="fs_criterio" value="4" /> No se identificó debilitamiento del cambio.</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 3 — ACCIONES DE REFUERZO -->
+    <div class="seccion">
+      <h2 class="seccion-titulo">Sección 3 — Acciones de Refuerzo</h2>
+      <div class="campo">
+        <label>En caso de identificar un debilitamiento del cambio, se definen acciones de refuerzo (comunicación o capacitación):</label>
+        <textarea id="fs_acciones_refuerzo" rows="3" placeholder="Describir las acciones de refuerzo definidas (dejar en blanco si no aplica)"></textarea>
+      </div>
+      <div class="control-nota">
+        El sostenimiento del cambio en la operación diaria queda a cargo del área dueña del proceso afectado (RDA). Los resultados de esta revisión se anexan al expediente del cambio.
+      </div>
+    </div>
+
+    <!-- SECCIÓN 4 — REVISIÓN CONJUNTA -->
+    <div class="seccion seccion-aprobacion">
+      <h2 class="seccion-titulo">Sección 4 — Revisión Conjunta</h2>
+      <div class="tabla-wrapper">
+        <table class="tabla-aprobacion">
+          <thead>
+            <tr>
+              <th>Instancia</th>
+              <th>Nombre y cargo</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Responsable del Cambio (RC)</strong></td>
+              <td><input type="text" id="fs_rc_nombre" placeholder="Nombre y cargo" /></td>
+              <td><input type="date" id="fs_rc_fecha" /></td>
+            </tr>
+            <tr>
+              <td><strong>OFGECA</strong></td>
+              <td><input type="text" id="fs_ofgeca_nombre" placeholder="Nombre y cargo" /></td>
+              <td><input type="date" id="fs_ofgeca_fecha" /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- BOTONES -->
+    <div class="botones-fase">
+      <button class="btn-exportar" onclick="exportarSeguimiento()">⬇ Exportar Seguimiento a Excel</button>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    Grupo Financiero CAFSA &nbsp;·&nbsp; Proceso BAI05 &nbsp;·&nbsp; COBIT 2019 / CONASSIF 5-24
+  </footer>
+
+  <script src="app.js"></script>
+  <script src="exportar.js"></script>
+</body>
+</html>
