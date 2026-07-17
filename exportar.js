@@ -385,3 +385,39 @@ function exportarFase3() {
     descargar(wb, 'F-BAI05-03_' + codigo + '_' + fecha + '.xlsx');
   });
 }
+
+// ================= SEGUIMIENTO DE SOSTENIMIENTO =================
+function exportarSeguimiento() {
+  var wb = new ExcelJS.Workbook();
+  var ws = wb.addWorksheet('Seguimiento');
+
+  construirHoja(ws,
+    'Formulario de Seguimiento de Sostenimiento — Fase 3',
+    'Cierre y Sostenimiento — BAI05 Gestión del Cambio Organizativo',
+    'BAI05.06 Incorporar nuevos enfoques  |  BAI05.07 Sostener cambios',
+    [
+      { tipo: 'seccion', texto: 'Sección 1 — Datos del Cambio' },
+      { tipo: 'campo', label: 'Código del cambio', value: val('fs_codigo') },
+      { tipo: 'campo', label: 'Nombre del cambio', value: val('fs_nombre') },
+      { tipo: 'campo', label: 'Responsable del Cambio (RC)', value: val('fs_rc') },
+      { tipo: 'campo', label: 'Fecha de la revisión de sostenimiento', value: val('fs_fecha_revision') },
+
+      { tipo: 'seccion', texto: 'Sección 2 — Criterios de Sostenimiento' },
+      { tipo: 'campo', label: 'Criterios que se cumplen', value: checkboxesSeleccionados('fs_criterio') },
+
+      { tipo: 'seccion', texto: 'Sección 3 — Acciones de Refuerzo' },
+      { tipo: 'campo', label: 'Acciones de refuerzo definidas (en caso de debilitamiento)', value: val('fs_acciones_refuerzo') },
+      { tipo: 'campo', label: 'Nota', value: 'El sostenimiento del cambio en la operación diaria queda a cargo del área dueña del proceso afectado (RDA). Los resultados de esta revisión se anexan al expediente del cambio.' },
+
+      { tipo: 'seccion', texto: 'Sección 4 — Revisión Conjunta' },
+      { tipo: 'campo', label: 'Responsable del Cambio (RC) — Nombre y cargo', value: val('fs_rc_nombre') },
+      { tipo: 'campo', label: 'Responsable del Cambio (RC) — Fecha', value: val('fs_rc_fecha') },
+      { tipo: 'campo', label: 'OFGECA — Nombre y cargo', value: val('fs_ofgeca_nombre') },
+      { tipo: 'campo', label: 'OFGECA — Fecha', value: val('fs_ofgeca_fecha') }
+    ]
+  );
+
+  var fecha = new Date().toISOString().slice(0, 10);
+  var codigo = val('fs_codigo') || 'sin-codigo';
+  descargar(wb, 'F-BAI05-Seguimiento_' + codigo + '_' + fecha + '.xlsx');
+}
