@@ -20,7 +20,7 @@
     </div>
     <div class="fase-barra">
       <span class="fase-barra-texto">Seguimiento</span>
-      <span class="fase-barra-sub">— Sostenimiento del Cambio (Fase 3)</span>
+      <span class="fase-barra-sub">— Sostenimiento del Cambio</span>
       <div class="fase-paso">
         <div class="paso-dot"></div>
         <div class="paso-dot"></div>
@@ -32,7 +32,7 @@
   <main class="main-content">
 
     <div class="form-header">
-      <div class="form-badge">Seguimiento de Sostenimiento — Fase 3</div>
+      <div class="form-badge">Sostenimiento</div>
       <div class="form-id">Formulario de Seguimiento de Sostenimiento — BAI05 Gestión del Cambio Organizativo</div>
       <div class="form-cobit">BAI05.06 Incorporar nuevos enfoques &nbsp;|&nbsp; BAI05.07 Sostener cambios</div>
     </div>
@@ -40,7 +40,7 @@
     <!-- NOTA INTRODUCTORIA -->
     <div class="seccion">
       <div class="control-nota">
-        A los seis meses posteriores al cierre del cambio, el Responsable del Cambio (RC) y el Oficial de Gestión de Calidad (OFGECA) realizan una revisión conjunta de sostenimiento para verificar que el cambio se ha mantenido en la operación (paso 6.4.7).
+        El RDA reporta al RC bimestralmente el estado de la operación diaria del cambio. A los seis meses posteriores al cierre, el RC consolida esos reportes y realiza, junto con el GERGEN, la revisión de sostenimiento (paso 6.5.1).
       </div>
     </div>
 
@@ -58,7 +58,7 @@
         </div>
         <div class="campo">
           <label>Responsable del Cambio (RC)</label>
-          <input type="text" id="fs_rc" placeholder="Nombre" />
+          <input type="text" id="fs_rc" value="Grupo CAFSA (Recursos Humanos)" />
         </div>
         <div class="campo">
           <label>Fecha de la revisión de sostenimiento</label>
@@ -89,13 +89,13 @@
         <textarea id="fs_acciones_refuerzo" rows="3" placeholder="Describir las acciones de refuerzo definidas (dejar en blanco si no aplica)"></textarea>
       </div>
       <div class="control-nota">
-        El sostenimiento del cambio en la operación diaria queda a cargo del área dueña del proceso afectado (RDA). Los resultados de esta revisión se anexan al expediente del cambio.
+        El sostenimiento del cambio en la operación diaria queda a cargo del área dueña del proceso afectado (RDA), con acompañamiento del RC. Los resultados de esta revisión se anexan al expediente del cambio.
       </div>
     </div>
 
-    <!-- SECCIÓN 4 — REVISIÓN CONJUNTA -->
+    <!-- SECCIÓN 4 — REVISIÓN DE SOSTENIMIENTO -->
     <div class="seccion seccion-aprobacion">
-      <h2 class="seccion-titulo">Sección 4 — Revisión Conjunta</h2>
+      <h2 class="seccion-titulo">Sección 4 — Revisión de Sostenimiento</h2>
       <div class="tabla-wrapper">
         <table class="tabla-aprobacion">
           <thead>
@@ -112,12 +112,28 @@
               <td><input type="date" id="fs_rc_fecha" /></td>
             </tr>
             <tr>
-              <td><strong>OFGECA</strong></td>
-              <td><input type="text" id="fs_ofgeca_nombre" placeholder="Nombre y cargo" /></td>
-              <td><input type="date" id="fs_ofgeca_fecha" /></td>
+              <td><strong>GERGEN</strong></td>
+              <td><input type="text" id="fs_gergen_nombre" placeholder="Nombre y cargo" /></td>
+              <td><input type="date" id="fs_gergen_fecha" /></td>
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 5 — REVISIÓN DE CALIDAD (OFGECA) -->
+    <div class="seccion seccion-aprobacion">
+      <h2 class="seccion-titulo">Sección 5 — Revisión de Calidad del Expediente</h2>
+      <div class="control-nota">
+        Una vez concluida la revisión de sostenimiento, el OFGECA revisa el expediente completo del cambio y comunica sus observaciones al GERGEN por correo (paso 6.5.2).
+      </div>
+      <div class="campo">
+        <label>OFGECA — Nombre y cargo</label>
+        <input type="text" id="fs_ofgeca_nombre" placeholder="Nombre y cargo" />
+      </div>
+      <div class="campo">
+        <label>Observaciones de calidad (si las hubiera)</label>
+        <textarea id="fs_ofgeca_observaciones" rows="3" placeholder="Dejar en blanco si no hay observaciones"></textarea>
       </div>
     </div>
 
