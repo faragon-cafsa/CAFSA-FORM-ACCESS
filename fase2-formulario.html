@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BAI05 — Fase 2: Implementación y Gestión del Cambio</title>
+  <title>BAI05 — Fase 2: Ejecución</title>
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
-
-  <!-- marco -->
 
   <header class="header">
     <div class="header-inner">
@@ -22,7 +20,7 @@
     </div>
     <div class="fase-barra">
       <span class="fase-barra-texto">Fase 2</span>
-      <span class="fase-barra-sub">— Implementación / Gestión del Cambio</span>
+      <span class="fase-barra-sub">— Ejecución</span>
       <div class="fase-paso">
         <div class="paso-dot"></div>
         <div class="paso-dot activo"></div>
@@ -79,14 +77,6 @@
           </thead>
           <tbody id="tbody-comunicacion">
             <tr>
-              <td><input type="text" value="Junta Directiva" /></td>
-              <td><input type="text" placeholder="Mensaje" /></td>
-              <td><input type="text" placeholder="Canal" /></td>
-              <td><input type="text" placeholder="Frec." /></td>
-              <td><input type="text" placeholder="Resp." /></td>
-              <td><button class="btn-eliminar" onclick="eliminarFila(this)">✕</button></td>
-            </tr>
-            <tr>
               <td><input type="text" value="Mandos medios" /></td>
               <td><input type="text" placeholder="Mensaje" /></td>
               <td><input type="text" placeholder="Canal" /></td>
@@ -120,7 +110,7 @@
     <div class="seccion">
       <h2 class="seccion-titulo">Componente B — Capacitación <span class="cobit-tag">BAI05.04</span></h2>
       <div class="control-nota">
-        Una vez realizadas las capacitaciones, referenciar el registro correspondiente resguardado en Recursos Humanos (paso 6.2.4).
+        Una vez realizadas las capacitaciones, referenciar el registro correspondiente (paso 6.3.3).
       </div>
       <div class="tabla-wrapper">
         <table class="tabla-dinamica">
@@ -130,7 +120,7 @@
               <th>Temas</th>
               <th>Modalidad y duración</th>
               <th>Fecha estimada</th>
-              <th>Ref. Recursos Humanos</th>
+              <th>Ref. de registro</th>
               <th></th>
             </tr>
           </thead>
@@ -140,7 +130,7 @@
               <td><input type="text" placeholder="Temas" /></td>
               <td><input type="text" placeholder="Modalidad" /></td>
               <td><input type="date" /></td>
-              <td><input type="text" placeholder="Referencia registro RH" /></td>
+              <td><input type="text" placeholder="Referencia registro" /></td>
               <td><button class="btn-eliminar" onclick="eliminarFila(this)">✕</button></td>
             </tr>
           </tbody>
@@ -149,10 +139,19 @@
       </div>
     </div>
 
+    <!-- COMPONENTE B — ACOMPAÑAMIENTO -->
+    <div class="seccion">
+      <h2 class="seccion-titulo">Componente B — Acompañamiento y Soporte Inicial <span class="cobit-tag">BAI05.05</span></h2>
+      <p class="seccion-nota">Registre el acompañamiento posterior a las capacitaciones para consolidar la adopción (paso 6.3.4).</p>
+      <div class="campo">
+        <textarea id="f2_acompanamiento" rows="3" placeholder="Describir dudas resueltas, tutoría ofrecida y aspectos reforzados"></textarea>
+      </div>
+    </div>
+
     <!-- COMPONENTE B — GANANCIAS RÁPIDAS -->
     <div class="seccion">
       <h2 class="seccion-titulo">Componente B — Ganancias Rápidas <span class="cobit-tag">BAI05.04</span></h2>
-      <p class="seccion-nota">Registre las ganancias rápidas identificadas y cómo se comunicaron a las partes interesadas (paso 6.3.6).</p>
+      <p class="seccion-nota">Registre las ganancias rápidas identificadas y cómo se comunicaron a las partes interesadas (paso 6.3.5).</p>
       <div class="tabla-wrapper">
         <table class="tabla-dinamica">
           <thead>
@@ -205,7 +204,7 @@
     <!-- COMPONENTE C — MÉTRICAS -->
     <div class="seccion">
       <h2 class="seccion-titulo">Componente C — Métricas de Adopción <span class="cobit-tag">BAI05.05</span></h2>
-      <p class="seccion-nota">Las métricas de adopción y sus metas las define el equipo para cada cambio (lineamiento 5.5), sujetas a revisión y aprobación del OFGECA.</p>
+      <p class="seccion-nota">Las métricas de adopción y sus metas las define el equipo para cada cambio (lineamiento 5.5).</p>
       <div class="tabla-wrapper">
         <table class="tabla-dinamica">
           <thead>
@@ -233,11 +232,11 @@
       </div>
     </div>
 
-    <!-- SECCIÓN — DECISIÓN DE APROBACIÓN -->
+    <!-- SECCIÓN — DECISIÓN DE APROBACIÓN (AL FINAL, YA EJECUTADO) -->
     <div class="seccion seccion-aprobacion">
-      <h2 class="seccion-titulo">Decisión de Aprobación del Plan</h2>
+      <h2 class="seccion-titulo">Decisión de Aprobación del Plan Ejecutado</h2>
       <div class="control-nota">
-        La Fase 3 NO puede iniciar sin el sello de aprobación del OFGECA (lineamiento 5.2).
+        La Fase 3 NO puede iniciar sin la decisión de aprobación del GERGEN (lineamiento 5.2).
       </div>
 
       <div class="campo">
@@ -250,37 +249,22 @@
 
       <!-- BLOQUE SI: aprobación -->
       <div id="f2_bloque_aprobado" style="display:none; margin-top:16px;">
-        <div class="tabla-wrapper">
-          <table class="tabla-aprobacion">
-            <thead>
-              <tr>
-                <th>Instancia</th>
-                <th>Nombre y cargo</th>
-                <th>Sello de aprobación</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>OFGECA</strong> <span class="obligatorio">Obligatorio</span></td>
-                <td><input type="text" id="f2_firma_ofgeca_nombre" placeholder="Nombre y cargo" /></td>
-                <td><input type="file" id="f2_evidencia_ofgeca" accept=".png,.jpg,.jpeg" /></td>
-              </tr>
-              <tr>
-                <td>Responsable del Cambio</td>
-                <td><input type="text" id="f2_firma_rc_nombre" placeholder="Nombre" /></td>
-                <td><input type="date" id="f2_firma_rc_fecha" /></td>
-              </tr>
-            </tbody>
-          </table>
-          <p class="seccion-nota">Adjunte el sello de aprobación enviado por el OFGECA por correo.</p>
+        <div class="campo">
+          <label>GERGEN — Nombre y cargo</label>
+          <input type="text" id="f2_gergen_nombre" placeholder="Nombre y cargo" />
         </div>
+        <div class="campo">
+          <label>Comentario (opcional)</label>
+          <textarea id="f2_gergen_comentario" rows="2" placeholder="Observaciones sobre la decisión"></textarea>
+        </div>
+        <p class="seccion-nota">La decisión de aprobación queda registrada en la plataforma y reflejada en el Excel exportado.</p>
       </div>
 
       <!-- BLOQUE NO: rechazo -->
       <div id="f2_bloque_rechazado" style="display:none; margin-top:16px;">
         <div class="campo">
           <label>Justificación del rechazo</label>
-          <textarea id="f2_justificacion_rechazo" rows="3" placeholder="Indique por qué no se aprueba el plan y se cancela el proceso."></textarea>
+          <textarea id="f2_justificacion_rechazo" rows="3" placeholder="Indique por qué no se aprueba el plan (ej. métricas de adopción no alcanzadas) y se cancela el proceso."></textarea>
         </div>
       </div>
     </div>
