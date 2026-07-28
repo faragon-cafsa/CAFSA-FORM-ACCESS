@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BAI05 — Fase 3: Seguimiento y Cierre</title>
+  <title>BAI05 — Fase 3: Cierre</title>
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
@@ -20,7 +20,7 @@
     </div>
     <div class="fase-barra">
       <span class="fase-barra-texto">Fase 3</span>
-      <span class="fase-barra-sub">— Seguimiento y Cierre</span>
+      <span class="fase-barra-sub">— Cierre</span>
       <div class="fase-paso">
         <div class="paso-dot"></div>
         <div class="paso-dot"></div>
@@ -32,7 +32,7 @@
   <main class="main-content">
 
     <div class="form-header">
-      <div class="form-badge">Fase 3 — Cierre y Sostenimiento</div>
+      <div class="form-badge">Fase 3 — Cierre</div>
       <div class="form-id">6-FOR-XXX — Formulario de Gestión del Cambio Organizativo</div>
       <div class="form-cobit">BAI05.06 Incorporar nuevos enfoques &nbsp;|&nbsp; BAI05.07 Sostener cambios</div>
     </div>
@@ -54,8 +54,8 @@
           <input type="text" id="f3_nombre" placeholder="Nombre" />
         </div>
         <div class="campo">
-          <label>Responsable del Cambio</label>
-          <input type="text" id="f3_rc" placeholder="Nombre" />
+          <label>Responsable del Cambio (RC)</label>
+          <input type="text" id="f3_rc" value="Grupo CAFSA (Recursos Humanos)" />
         </div>
       </div>
     </div>
@@ -126,32 +126,17 @@
     <div class="seccion seccion-aprobacion">
       <h2 class="seccion-titulo">Sección 3 — Aprobación de Cierre Formal</h2>
       <div class="control-nota">
-        Sin el sello de aprobación del OFGECA y la JD, el cambio permanece activo en el registro del OFGECA (lineamiento 5.2.3).
+        Sin la decisión de aprobación del GERGEN, el cambio permanece activo en su registro (lineamiento 5.2).
       </div>
-      <div class="tabla-wrapper">
-        <table class="tabla-aprobacion">
-          <thead>
-            <tr>
-              <th>Instancia</th>
-              <th>Nombre y cargo</th>
-              <th>Sello de aprobación</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>OFGECA, Junta Directiva</strong> <span class="obligatorio">Obligatorio</span> <span class="opcional">y Gerente General cuando aplique</span></td>
-              <td><input type="text" id="f3_firma_cierre_nombre" placeholder="Nombre y cargo" /></td>
-              <td><input type="file" id="f3_evidencia_cierre" accept=".pdf,.jpg,.png,.eml" /></td>
-            </tr>
-            <tr>
-              <td>Responsable del Cambio</td>
-              <td><input type="text" id="f3_firma_rc_nombre" placeholder="Nombre" /></td>
-              <td><input type="date" id="f3_firma_rc_fecha" /></td>
-            </tr>
-          </tbody>
-        </table>
-        <p class="seccion-nota">Adjunte el sello de aprobación enviado por el OFGECA y la JD (y el GERGEN cuando aplique) por correo.</p>
+      <div class="campo">
+        <label>GERGEN — Nombre y cargo</label>
+        <input type="text" id="f3_gergen_nombre" placeholder="Nombre y cargo" />
       </div>
+      <div class="campo">
+        <label>Comentario (opcional)</label>
+        <textarea id="f3_gergen_comentario" rows="2" placeholder="Observaciones sobre el cierre"></textarea>
+      </div>
+      <p class="seccion-nota">La decisión de aprobación queda registrada en la plataforma y reflejada en el Excel exportado. Tras el cierre, el RC informa a las áreas afectadas y da inicio a la etapa de Sostenimiento.</p>
     </div>
 
     <!-- BOTONES -->
