@@ -164,48 +164,6 @@ function descargar(wb, nombre) {
   });
 }
 
-// Lee el archivo (imagen) adjunto en un input file y agrega una pestaña "Sello de aprobación".
-// Devuelve una promesa que se resuelve cuando terminó (haya o no imagen).
-function agregarPestanaSello(wb, inputId) {
-  return new Promise(function (resolve) {
-    var input = document.getElementById(inputId);
-    if (!input || !input.files || input.files.length === 0) {
-      resolve(false); // no hay archivo adjunto
-      return;
-    }
-    var file = input.files[0];
-    var tipo = (file.type || '').toLowerCase();
-    // Solo imágenes (el sello es PNG/JPG)
-    var esPng = tipo.indexOf('png') !== -1;
-    var esJpg = tipo.indexOf('jpeg') !== -1 || tipo.indexOf('jpg') !== -1;
-    if (!esPng && !esJpg) {
-      resolve(false); // no es imagen, no se puede incrustar
-      return;
-    }
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      try {
-        var base64 = e.target.result; // data URL
-        var imageId = wb.addImage({ base64: base64, extension: esPng ? 'png' : 'jpeg' });
-        var hoja = wb.addWorksheet('Sello de aprobación');
-        hoja.getCell('A1').value = 'Sello de aprobación adjunto';
-        hoja.getCell('A1').font = { name: FUENTE, size: 12, bold: true, color: { argb: NEGRO } };
-        hoja.getColumn(1).width = 12;
-        // Insertar la imagen a partir de la fila 3
-        hoja.addImage(imageId, {
-          tl: { col: 0, row: 2 },
-          ext: { width: 700, height: 480 }
-        });
-        resolve(true);
-      } catch (err) {
-        resolve(false);
-      }
-    };
-    reader.onerror = function () { resolve(false); };
-    reader.readAsDataURL(file);
-  });
-}
-
 // ================= FASE 1 =================
 function exportarFase1() {
   var wb = new ExcelJS.Workbook();
@@ -228,8 +186,8 @@ function exportarFase1() {
     bloqueAprob = [
       { tipo: 'seccion', texto: 'Sección 5 — Decisión de Aprobación' },
       { tipo: 'campo', label: 'Resultado', value: 'APROBADO — Se autoriza el avance a la Fase 2' },
-      { tipo: 'campo', label: 'OFGECA (Obligatorio) — Nombre y cargo', value: val('f1_firma_ofgeca_nombre') },
-      { tipo: 'campo', label: 'Sello de aprobación', value: 'Adjunto en la pestaña "Sello de aprobación"' }
+      { tipo: 'campo', label: 'GERGEN — Nombre y cargo', value: val('f1_gergen_nombre') },
+      { tipo: 'campo', label: 'Comentario', value: val('f1_gergen_comentario') }
     ];
   }
 
@@ -266,10 +224,7 @@ function exportarFase1() {
   var fecha = new Date().toISOString().slice(0, 10);
   var codigo = val('f1_codigo') || 'sin-codigo';
   var sufijo = (decision === 'no') ? '_RECHAZADO' : '';
-  var promSello = (decision === 'no') ? Promise.resolve(false) : agregarPestanaSello(wb, 'f1_evidencia_ofgeca');
-  promSello.then(function () {
-    descargar(wb, 'F-BAI05-01_' + codigo + '_' + fecha + sufijo + '.xlsx');
-  });
+  descargar(wb, 'F-BAI05-01_' + codigo + '_' + fecha + sufijo + '.xlsx');
 }
 
 // ================= FASE 2 =================
@@ -289,18 +244,16 @@ function exportarFase2() {
   var bloqueAprob;
   if (decision === 'no') {
     bloqueAprob = [
-      { tipo: 'seccion', texto: 'Decisión de Aprobación del Plan' },
+      { tipo: 'seccion', texto: 'Decisión de Aprobación del Plan Ejecutado' },
       { tipo: 'campo', label: 'Resultado', value: 'RECHAZADO — No se aprueba el avance a la Fase 3' },
       { tipo: 'campo', label: 'Justificación del rechazo', value: val('f2_justificacion_rechazo') }
     ];
   } else {
     bloqueAprob = [
-      { tipo: 'seccion', texto: 'Decisión de Aprobación del Plan' },
+      { tipo: 'seccion', texto: 'Decisión de Aprobación del Plan Ejecutado' },
       { tipo: 'campo', label: 'Resultado', value: 'APROBADO — Se autoriza el avance a la Fase 3' },
-      { tipo: 'campo', label: 'OFGECA (Obligatorio) — Nombre y cargo', value: val('f2_firma_ofgeca_nombre') },
-      { tipo: 'campo', label: 'Sello de aprobación', value: 'Adjunto en la pestaña "Sello de aprobación"' },
-      { tipo: 'campo', label: 'Responsable del Cambio — Nombre', value: val('f2_firma_rc_nombre') },
-      { tipo: 'campo', label: 'Responsable del Cambio — Fecha', value: val('f2_firma_rc_fecha') }
+      { tipo: 'campo', label: 'GERGEN — Nombre y cargo', value: val('f2_gergen_nombre') },
+      { tipo: 'campo', label: 'Comentario', value: val('f2_gergen_comentario') }
     ];
   }
 
@@ -315,7 +268,10 @@ function exportarFase2() {
       { tipo: 'tabla', headers: ['Audiencia', 'Mensaje clave', 'Canal', 'Frecuencia', 'Responsable'], rows: comunicacion },
 
       { tipo: 'seccion', texto: 'Componente B — Capacitación (BAI05.04)' },
-      { tipo: 'tabla', headers: ['Grupo a capacitar', 'Temas', 'Modalidad y duración', 'Fecha estimada', 'Ref. Recursos Humanos'], rows: capacitacion },
+      { tipo: 'tabla', headers: ['Grupo a capacitar', 'Temas', 'Modalidad y duración', 'Fecha estimada', 'Ref. de registro'], rows: capacitacion },
+
+      { tipo: 'seccion', texto: 'Componente B — Acompañamiento y Soporte Inicial (BAI05.05)' },
+      { tipo: 'campo', label: 'Detalle del acompañamiento', value: val('f2_acompanamiento') },
 
       { tipo: 'seccion', texto: 'Componente B — Ganancias Rápidas (BAI05.04)' },
       { tipo: 'tabla', headers: ['Ganancia rápida identificada', 'Cómo se comunicó', 'Fecha'], rows: ganancias },
@@ -337,10 +293,7 @@ function exportarFase2() {
   var fecha = new Date().toISOString().slice(0, 10);
   var codigo = val('f2_codigo') || 'sin-codigo';
   var sufijo = (decision === 'no') ? '_RECHAZADO' : '';
-  var promSello = (decision === 'no') ? Promise.resolve(false) : agregarPestanaSello(wb, 'f2_evidencia_ofgeca');
-  promSello.then(function () {
-    descargar(wb, 'F-BAI05-02_' + codigo + '_' + fecha + sufijo + '.xlsx');
-  });
+  descargar(wb, 'F-BAI05-02_' + codigo + '_' + fecha + sufijo + '.xlsx');
 }
 
 // ================= FASE 3 =================
@@ -352,14 +305,14 @@ function exportarFase3() {
 
   construirHoja(ws,
     'F-BAI05-03 — Formulario de Gestión del Cambio Organizativo (Fase 3)',
-    'Cierre y Sostenimiento — BAI05 Gestión del Cambio Organizativo',
+    'Cierre — BAI05 Gestión del Cambio Organizativo',
     'BAI05.06 Incorporar nuevos enfoques  |  BAI05.07 Sostener cambios',
     [
       { tipo: 'seccion', texto: 'Identificación del Cambio' },
       { tipo: 'campo', label: 'Código del cambio', value: val('f3_codigo') },
       { tipo: 'campo', label: 'Fecha de cierre', value: val('f3_fecha_cierre') },
       { tipo: 'campo', label: 'Nombre del cambio', value: val('f3_nombre') },
-      { tipo: 'campo', label: 'Responsable del Cambio', value: val('f3_rc') },
+      { tipo: 'campo', label: 'Responsable del Cambio (RC)', value: val('f3_rc') },
 
       { tipo: 'seccion', texto: 'Sección 1 — Resultados vs. Metas' },
       { tipo: 'tabla', headers: ['Métrica', 'Meta mínima', 'Meta óptima', 'Resultado final', 'Evaluación'], rows: resultados },
@@ -372,18 +325,15 @@ function exportarFase3() {
       { tipo: 'campo', label: '¿Cómo se distribuirán estas lecciones?', value: val('f3_l5') },
 
       { tipo: 'seccion', texto: 'Sección 3 — Aprobación de Cierre Formal' },
-      { tipo: 'campo', label: 'OFGECA, Junta Directiva (Obligatorio) y Gerente General cuando aplique — Nombre y cargo', value: val('f3_firma_cierre_nombre') },
-      { tipo: 'campo', label: 'Evidencia de aprobación (documento único)', value: 'Documento adjunto en el expediente' },
-      { tipo: 'campo', label: 'Responsable del Cambio — Nombre', value: val('f3_firma_rc_nombre') },
-      { tipo: 'campo', label: 'Responsable del Cambio — Fecha', value: val('f3_firma_rc_fecha') }
+      { tipo: 'campo', label: 'Resultado', value: 'APROBADO — Cierre formal del cambio' },
+      { tipo: 'campo', label: 'GERGEN — Nombre y cargo', value: val('f3_gergen_nombre') },
+      { tipo: 'campo', label: 'Comentario', value: val('f3_gergen_comentario') }
     ]
   );
 
   var fecha = new Date().toISOString().slice(0, 10);
   var codigo = val('f3_codigo') || 'sin-codigo';
-  agregarPestanaSello(wb, 'f3_evidencia_cierre').then(function () {
-    descargar(wb, 'F-BAI05-03_' + codigo + '_' + fecha + '.xlsx');
-  });
+  descargar(wb, 'F-BAI05-03_' + codigo + '_' + fecha + '.xlsx');
 }
 
 // ================= SEGUIMIENTO DE SOSTENIMIENTO =================
@@ -392,8 +342,8 @@ function exportarSeguimiento() {
   var ws = wb.addWorksheet('Seguimiento');
 
   construirHoja(ws,
-    'Formulario de Seguimiento de Sostenimiento — Fase 3',
-    'Cierre y Sostenimiento — BAI05 Gestión del Cambio Organizativo',
+    'Formulario de Seguimiento de Sostenimiento',
+    'Sostenimiento — BAI05 Gestión del Cambio Organizativo',
     'BAI05.06 Incorporar nuevos enfoques  |  BAI05.07 Sostener cambios',
     [
       { tipo: 'seccion', texto: 'Sección 1 — Datos del Cambio' },
@@ -407,13 +357,16 @@ function exportarSeguimiento() {
 
       { tipo: 'seccion', texto: 'Sección 3 — Acciones de Refuerzo' },
       { tipo: 'campo', label: 'Acciones de refuerzo definidas (en caso de debilitamiento)', value: val('fs_acciones_refuerzo') },
-      { tipo: 'campo', label: 'Nota', value: 'El sostenimiento del cambio en la operación diaria queda a cargo del área dueña del proceso afectado (RDA). Los resultados de esta revisión se anexan al expediente del cambio.' },
 
-      { tipo: 'seccion', texto: 'Sección 4 — Revisión Conjunta' },
+      { tipo: 'seccion', texto: 'Sección 4 — Revisión de Sostenimiento' },
       { tipo: 'campo', label: 'Responsable del Cambio (RC) — Nombre y cargo', value: val('fs_rc_nombre') },
       { tipo: 'campo', label: 'Responsable del Cambio (RC) — Fecha', value: val('fs_rc_fecha') },
+      { tipo: 'campo', label: 'GERGEN — Nombre y cargo', value: val('fs_gergen_nombre') },
+      { tipo: 'campo', label: 'GERGEN — Fecha', value: val('fs_gergen_fecha') },
+
+      { tipo: 'seccion', texto: 'Sección 5 — Revisión de Calidad del Expediente' },
       { tipo: 'campo', label: 'OFGECA — Nombre y cargo', value: val('fs_ofgeca_nombre') },
-      { tipo: 'campo', label: 'OFGECA — Fecha', value: val('fs_ofgeca_fecha') }
+      { tipo: 'campo', label: 'Observaciones de calidad', value: val('fs_ofgeca_observaciones') }
     ]
   );
 
