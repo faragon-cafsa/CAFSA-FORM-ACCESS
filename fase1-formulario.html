@@ -63,7 +63,7 @@
         </div>
         <div class="campo">
           <label>Responsable del Cambio (RC)</label>
-          <input type="text" id="f1_rc" placeholder="Nombre" />
+          <input type="text" id="f1_rc" value="Grupo CAFSA (Recursos Humanos)" />
         </div>
         <div class="campo">
           <label>Fecha estimada de inicio</label>
@@ -89,7 +89,6 @@
           <label class="check-label"><input type="checkbox" name="criterio" value="1" /> 5.1.1: Afecta procesos críticos del negocio</label>
           <label class="check-label"><input type="checkbox" name="criterio" value="2" /> 5.1.2: Involucra dos o más unidades de negocio</label>
           <label class="check-label"><input type="checkbox" name="criterio" value="3" /> 5.1.3: Modifica la estructura organizacional</label>
-          <label class="check-label"><input type="checkbox" name="criterio" value="4" /> 5.1.4: El cambio es clasificado como proyecto de alto impacto según la metodología de proyectos organizacional.</label>
         </div>
       </div>
       <div class="campo">
@@ -153,7 +152,7 @@
           <tbody id="tbody-equipo">
             <tr>
               <td><input type="text" placeholder="Nombre" /></td>
-              <td><input type="text" placeholder="Área" /></td>
+              <td><input type="text" value="Grupo CAFSA" /></td>
               <td><input type="text" value="Responsable del Cambio" /></td>
               <td><input type="number" placeholder="%" min="0" max="100" /></td>
               <td><button class="btn-eliminar" onclick="eliminarFila(this)">✕</button></td>
@@ -175,7 +174,7 @@
     <div class="seccion seccion-aprobacion">
       <h2 class="seccion-titulo">Sección 5 — Decisión de Aprobación</h2>
       <div class="control-nota">
-        La Fase 2 NO puede iniciar sin el sello de aprobación del OFGECA (lineamiento 5.2).
+        La Fase 2 NO puede iniciar sin la decisión de aprobación del GERGEN (lineamiento 5.2).
       </div>
 
       <div class="campo">
@@ -188,25 +187,15 @@
 
       <!-- BLOQUE SI: aprobación -->
       <div id="f1_bloque_aprobado" style="display:none; margin-top:16px;">
-        <div class="tabla-wrapper">
-          <table class="tabla-aprobacion">
-            <thead>
-              <tr>
-                <th>Instancia</th>
-                <th>Nombre y cargo</th>
-                <th>Sello de aprobación</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>OFGECA</strong> <span class="obligatorio">Obligatorio</span></td>
-                <td><input type="text" id="f1_firma_ofgeca_nombre" placeholder="Nombre y cargo" /></td>
-                <td><input type="file" id="f1_evidencia_ofgeca" accept=".png,.jpg,.jpeg" /></td>
-              </tr>
-            </tbody>
-          </table>
-          <p class="seccion-nota">Adjunte el sello de aprobación enviado por el OFGECA por correo.</p>
+        <div class="campo">
+          <label>GERGEN — Nombre y cargo</label>
+          <input type="text" id="f1_gergen_nombre" placeholder="Nombre y cargo" />
         </div>
+        <div class="campo">
+          <label>Comentario (opcional)</label>
+          <textarea id="f1_gergen_comentario" rows="2" placeholder="Observaciones sobre la decisión"></textarea>
+        </div>
+        <p class="seccion-nota">La decisión de aprobación queda registrada en la plataforma y reflejada en el Excel exportado.</p>
       </div>
 
       <!-- BLOQUE NO: rechazo -->
