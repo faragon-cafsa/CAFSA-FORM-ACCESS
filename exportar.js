@@ -280,7 +280,11 @@ function exportarFase2() {
       { tipo: 'tabla', headers: ['Resistencia identificada', 'Acción tomada', 'Resultado obtenido'], rows: resistencia },
 
       { tipo: 'seccion', texto: 'Componente C — Métricas de Adopción (BAI05.05)' },
-      { tipo: 'tabla', headers: ['Métrica', 'Meta mínima', 'Meta óptima', 'Resultado real', 'Fuente'], rows: metricas }
+      { tipo: 'tabla', headers: ['Métrica', 'Meta mínima', 'Meta óptima', 'Resultado real', 'Fuente'], rows: metricas },
+      { tipo: 'campo', label: '¿Se activó un plan correctivo?', value: (function () {
+          var el = document.querySelector('input[name="f2_plan_correctivo"]:checked');
+          return el ? (el.value === 'si' ? 'Sí — comunicado al GERGEN por correo' : 'No') : '';
+        })() }
   ].concat(bloqueAprob);
 
   construirHoja(ws,
